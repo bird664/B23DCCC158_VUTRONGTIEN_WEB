@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Sinh Viên</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Quản Lý Sinh Viên</h1>
+
+        <form id="student-form">
+            <input type="hidden" id="student-id">
+            <label for="student-code">Mã sinh viên:</label>
+            <input type="text" id="student-code" required>
+
+            <label for="student-name">Họ tên:</label>
+            <input type="text" id="student-name" required>
+
+            <label for="student-gender">Giới tính:</label>
+            <select id="student-gender" required>
+                <option value="Nam">Nam</option>
+                <option value="Nữ">Nữ</option>
+            </select>
+
+            <label for="student-birthdate">Ngày sinh:</label>
+            <input type="date" id="student-birthdate" required>
+
+            <label for="student-hometown">Quê quán:</label>
+            <input type="text" id="student-hometown" required>
+
+            <button type="submit">Thêm sinh viên</button>
+        </form>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Mã sinh viên</th>
+                    <th>Họ tên</th>
+                    <th>Giới tính</th>
+                    <th>Ngày sinh</th>
+                    <th>Quê quán</th>
+                    <th>Hành động</th>
+                </tr>
+            </thead>
+            <tbody id="student-list">
+                <!-- Dữ liệu sinh viên sẽ được chèn vào đây -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
