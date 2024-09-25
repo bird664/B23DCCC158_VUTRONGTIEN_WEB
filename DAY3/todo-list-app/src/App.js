@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './App.css'; // File CSS để định kiểu
+import { FaCalendarAlt } from 'react-icons/fa'; // Thêm biểu tượng lịch
 
 function App() {
   const [tasks, setTasks] = useState([
@@ -62,7 +63,6 @@ function App() {
               ) : (
                 <>
                   {task.text}
-                  <span className="due-date">{task.dueDate}</span>
                 </>
               )}
             </div>
@@ -75,6 +75,11 @@ function App() {
                   <button className="delete" onClick={() => deleteTask(task.id)}>Delete</button>
                 </>
               )}
+            </div>
+            {/* Hiển thị ngày hạn và biểu tượng lịch */}
+            <div className="due-date">
+              <FaCalendarAlt className="calendar-icon" />
+              {task.dueDate}
             </div>
           </li>
         ))}
