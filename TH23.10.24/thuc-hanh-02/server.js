@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-
+const path = require('path');
 const app = express();
 const port = 3000;
 
@@ -11,6 +11,7 @@ let products = [
     { id: 1, name: 'Sản phẩm A', price: 100 },
     { id: 2, name: 'Sản phẩm B', price: 200 }
 ];
+app.use(express.static(path.join(__dirname, 'public')));
 
 // GET: Lấy danh sách sản phẩm
 app.get('/products', (req, res) => {
