@@ -1,48 +1,47 @@
 // backend/controllers/taskController.js
 const taskModel = require('../models/taskModel');
 
-const getAllTasks = (req, res) => {
-    taskModel.getAllTasks((err, result) => {
-        if (err) {
-            return res.status(500).json({ error: err.message });
-        }
-        res.json(result);
-    });
+const getAllTasks = async (req, res) => {
+    try {
+        const [rows] = await taskModel.getAllTasks();
+        res.json(rows);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 };
 
-const addTask = (req, res) => {
+const addTask = async (req, res) => {
     const newTask = req.body;
-    taskModel.addTask(newTask, (err, result) => {
-        if (err) {
-            return res.status(500).json({ error: err.message });
-        }
+    try {
+        const [result] = await taskModel.addTask(newTask);
         res.status(201).json({ id: result.insertId, ...newTask });
-    });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 };
 
-const updateTask = (req, res) => {
+const updateTask = async (req, res) => {
     const { id } = req.params;
     const updatedTask = req.body;
-
-    taskModel.updateTask(id, updatedTask, (err, result) => {
-        if (err) {
-            return res.status(500).json({ error: err.message });
-        }
+    try {
+        const [result] = await taskModel.updateTask(id, updatedTask);
         if (result.affectedRows === 0) {
             return res.status(404).json({ message: 'Task not found' });
         }
-        res.json({ id, ...updatedTask });  // Trả về task đã được cập nhật
-    });
+        res.json({ id, ...updatedTask });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 };
 
-const deleteTask = (req, res) => {
+const deleteTask = async (req, res) => {
     const { id } = req.params;
-    taskModel.deleteTask(id, (err, result) => {
-        if (err) {
-            return res.status(500).json({ error: err.message });
-        }
+    try {
+        await taskModel.deleteTask(id);
         res.status(204).end();
-    });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
 };
 
 module.exports = { getAllTasks, addTask, updateTask, deleteTask };

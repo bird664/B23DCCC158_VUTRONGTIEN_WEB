@@ -6,8 +6,12 @@ import './App.css';
 const App = () => {
     return (
         <div className="App">
-            <h1>Todo List Application</h1>
-            <TaskList />
+            <header>
+                <h1>Todo List Application</h1>
+            </header>
+            <main>
+                <TaskList />
+            </main>
         </div>
     );
 };

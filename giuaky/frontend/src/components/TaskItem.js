@@ -1,49 +1,39 @@
 // frontend/src/components/TaskItem.js
-import React, { useState } from 'react';
-import axios from 'axios';
+import React from 'react';
+import { updateTask } from '../services/apiService';
 
-// Hàm hỗ trợ định dạng ngày tháng theo kiểu dd-mm-yyyy
-const formatDate = (dateString) => {
-    const date = new Date(dateString);
-    return date.toLocaleDateString('en-GB'); // Định dạng ngày theo dd-mm-yyyy
-};
-
-const TaskItem = ({ task, onEdit, onDelete }) => {
-    const [completed, setCompleted] = useState(task.completed);
-
-    // Chuyển trạng thái hoàn thành của task
-    const handleToggleCompletion = () => {
-        const updatedTask = { ...task, completed: !completed };
-        axios.put(`http://localhost:5000/api/tasks/${task.id}`, updatedTask)
-            .then(() => {
-                setCompleted(!completed);
-            })
-            .catch(error => console.error('Error updating task completion:', error));
-    };
-
-    // Xóa task
-    const handleDelete = () => {
-        axios.delete(`http://localhost:5000/api/tasks/${task.id}`)
-            .then(() => {
-                onDelete(task.id); // Xóa task khỏi danh sách
-            })
-            .catch(error => console.error('Error deleting task:', error));
+const TaskItem = ({ task, onEdit, onDelete, onToggleComplete }) => {
+    const handleToggleComplete = async () => {
+        const updatedTask = { ...task, completed: !task.completed };
+        try {
+            await updateTask(task.id, updatedTask);
+            onToggleComplete(task.id, updatedTask.completed);
+        } catch (error) {
+            console.error('Error updating task completion:', error);
+        }
     };
 
     return (
-        <li>
-            <input 
-                type="radio" 
-                checked={completed} 
-                onChange={handleToggleCompletion} 
-            />
+        <li style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px', borderBottom: '1px solid #ddd' }}>
             <div>
                 <strong>{task.title}</strong>
+                <p>{task.description}</p>
+                <small>Due Date: {new Date(task.due_date).toLocaleDateString('en-GB')}</small>
+                <div>
+                    <label>
+                        <input 
+                            type="checkbox" 
+                            checked={task.completed} 
+                            onChange={handleToggleComplete} 
+                        /> 
+                        Completed
+                    </label>
+                </div>
             </div>
-            <div>{task.description}</div>
-            <div>{formatDate(task.due_date)}</div>
-            <button onClick={handleDelete}>Delete</button>
-            <button onClick={() => onEdit(task)}>Edit</button>
+            <div>
+                <button onClick={() => onEdit(task)} style={{ marginRight: '5px' }}>Edit</button>
+                <button onClick={() => onDelete(task.id)}>Delete</button>
+            </div>
         </li>
     );
 };
