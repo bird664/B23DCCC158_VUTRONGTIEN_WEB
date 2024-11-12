@@ -1,6 +1,7 @@
 // frontend/src/components/TaskItem.js
 import React from 'react';
 import { updateTask } from '../services/apiService';
+import '../App.css'; // Import CSS nếu bạn đã thêm vào App.css
 
 const TaskItem = ({ task, onEdit, onDelete, onToggleComplete }) => {
     const handleToggleComplete = async () => {
@@ -14,11 +15,13 @@ const TaskItem = ({ task, onEdit, onDelete, onToggleComplete }) => {
     };
 
     return (
-        <li style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px', borderBottom: '1px solid #ddd' }}>
-            <div>
-                <strong>{task.title}</strong>
-                <p>{task.description}</p>
-                <small>Due Date: {new Date(task.due_date).toLocaleDateString('en-GB')}</small>
+        <li className="task-item">
+            <div className="task-content">
+                <strong className="task-title">{task.title}</strong>
+                <p className="task-description">{task.description}</p>
+                <small className="task-date">
+                    Due Date: {new Date(task.due_date).toLocaleDateString('en-GB')}
+                </small>
                 <div>
                     <label>
                         <input 
@@ -30,9 +33,9 @@ const TaskItem = ({ task, onEdit, onDelete, onToggleComplete }) => {
                     </label>
                 </div>
             </div>
-            <div>
-                <button onClick={() => onEdit(task)} style={{ marginRight: '5px' }}>Edit</button>
-                <button onClick={() => onDelete(task.id)}>Delete</button>
+            <div className="task-buttons">
+                <button onClick={() => onEdit(task)} className="button button-edit">Edit</button>
+                <button onClick={() => onDelete(task.id)} className="button button-delete">Delete</button>
             </div>
         </li>
     );
