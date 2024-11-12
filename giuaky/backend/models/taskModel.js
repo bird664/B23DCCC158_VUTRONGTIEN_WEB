@@ -3,8 +3,8 @@ const mysql = require('mysql2');
 
 const db = mysql.createConnection({
     host: 'localhost',
-    user: 'root',
-    password: '',
+    user: 'root', // Mặc định của XAMPP
+    password: '', // Mặc định của XAMPP
     database: 'todo_db'
 });
 

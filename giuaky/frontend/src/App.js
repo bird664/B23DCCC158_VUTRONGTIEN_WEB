@@ -1,13 +1,12 @@
 // frontend/src/App.js
 import React from 'react';
 import TaskList from './components/TaskList';
-import AddTaskForm from './components/AddTaskForm';
+import './App.css';
 
 const App = () => {
     return (
-        <div>
-            <h1>Todo App</h1>
-            <AddTaskForm />
+        <div className="App">
+            <h1>Todo List Application</h1>
             <TaskList />
         </div>
     );

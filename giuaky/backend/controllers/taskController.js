@@ -23,11 +23,15 @@ const addTask = (req, res) => {
 const updateTask = (req, res) => {
     const { id } = req.params;
     const updatedTask = req.body;
+
     taskModel.updateTask(id, updatedTask, (err, result) => {
         if (err) {
             return res.status(500).json({ error: err.message });
         }
-        res.json({ id, ...updatedTask });
+        if (result.affectedRows === 0) {
+            return res.status(404).json({ message: 'Task not found' });
+        }
+        res.json({ id, ...updatedTask });  // Trả về task đã được cập nhật
     });
 };
 
