@@ -1,7 +1,7 @@
 // frontend/src/components/TaskItem.js
 import React from 'react';
 import { updateTask } from '../services/apiService';
-import '../App.css'; // Import CSS nếu bạn đã thêm vào App.css
+import '../App.css'; 
 
 const TaskItem = ({ task, onEdit, onDelete, onToggleComplete }) => {
     const handleToggleComplete = async () => {
